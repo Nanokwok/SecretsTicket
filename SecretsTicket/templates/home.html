@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
+    <title>SecretsTicket</title>
+</head>
+<script>
+    // Function to move to the next input
+    function moveToNext(current, nextId) {
+        if (current.value.length === 1) {
+            const nextInput = document.getElementById(nextId);
+            if (nextInput) {
+                nextInput.focus();
+            }
+            checkPassword(); // Check password whenever the user types the next character
+        }
+    }
+
+    // Function to move to the previous input on Backspace
+    function moveToPrev(event, currentId, prevId) {
+        if (event.key === 'Backspace' && event.target.value === '') {
+            const prevInput = document.getElementById(prevId);
+            if (prevInput) {
+                prevInput.focus();
+            }
+        }
+    }
+
+    // Function to check the password
+function checkPassword() {
+    const password = [
+        document.getElementById('input1').value,
+        document.getElementById('input2').value,
+        document.getElementById('input3').value,
+        document.getElementById('input4').value,
+        document.getElementById('input5').value,
+        document.getElementById('input6').value,
+        document.getElementById('input7').value,
+        document.getElementById('input8').value
+    ].join('');
+
+    console.log(password);  // Debugging: Check if the password value is correct
+
+    const hintBox = document.getElementById('hintBox');
+    const lockImage = document.querySelector('img[alt="Lock"]');  // Get lock image
+
+    // Check if the password matches
+    if (password === '09082024') {
+        hintBox.innerHTML = '<button class="w-full bg-[#ff627c] text-white py-2 px-4 rounded-lg hover:bg-[#e15a6f] focus:outline-none focus:ring-2 focus:ring-[#ff627c]">See Ticket</button>';
+    } else {
+        hintBox.innerHTML = 'hint: when u be my gf <3';
+
+        // If password is incorrect, make the lock image shake
+        lockImage.classList.add('shake');
+
+        // After the animation is done, remove the shake class
+        setTimeout(() => {
+            lockImage.classList.remove('shake');
+        }, 500);  // Duration of the animation
+    }
+}
+
+
+    // Attach event listeners after the DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputs = document.querySelectorAll('input[type="password"]');
+        inputs.forEach(input => {
+            input.addEventListener('input', checkPassword); // Trigger password check when typing
+        });
+    });
+</script>
+
+<div class="w-full h-screen bg-[#fbe261] flex flex-col justify-center items-center">
+    <div class="w-full flex flex-col justify-start items-center">
+        <div class="w-full max-w-sm flex flex-col justify-start items-start px-4">
+            <div class="w-full flex flex-col justify-start items-end">
+                <div class="w-full flex flex-col justify-start items-start">
+                    <div class="flex flex-col justify-start items-start">
+                        <div class="w-full text-[#2f1a1d] text-[10vw] md:text-[64px] font-bold tracking-[2px] md:tracking-[3.84px]">
+                            SECRETS
+                        </div>
+                        <div class="w-full text-[#ff627c] text-[25vw] md:text-[64px] font-bold tracking-[2px] md:tracking-[3.84px] -mt-[40px]">
+                            Ticket
+                        </div>
+                    </div>
+                </div>
+                <div class="text-start text-[#6197dd] text-[6vw] md:text-[32px] font-bold tracking-wide md:tracking-widest -mt-[20px] mb-10">
+                    For Poyschai
+                </div>
+            </div>
+        </div>
+        <div class="w-full px-4 flex flex-col items-start justify-center">
+            <div class="w-2/5 relative h-auto -mt-[130px]">
+                <img src="{% static 'dog.png' %}" alt="Dog"/>
+            </div>
+        </div>
+    </div>
+    <div class="w-full px-4 py-6 bg-[#a4a0c9] border-t border-b border-black flex flex-col justify-center items-center gap-4">
+        <div class="w-16 h-16 relative mb-5">
+            <img src="{% static 'lock.png' %}" alt="Lock"/>
+        </div>
+        <div class="w-full flex justify-center items-center gap-2">
+            <input type="password" maxlength="1" class="w-8 h-12 bg-white rounded-lg border border-black text-center text-xl focus:outline-none" oninput="moveToNext(this, 'input2')" onkeydown="moveToPrev(event, 'input1', null)" id="input1" />
+            <input type="password" maxlength="1" class="w-8 h-12 bg-white rounded-lg border border-black text-center text-xl focus:outline-none" oninput="moveToNext(this, 'input3')" onkeydown="moveToPrev(event, 'input2', 'input1')" id="input2" />
+            <input type="password" maxlength="1" class="w-8 h-12 bg-white rounded-lg border border-black text-center text-xl focus:outline-none" oninput="moveToNext(this, 'input4')" onkeydown="moveToPrev(event, 'input3', 'input2')" id="input3" />
+            <input type="password" maxlength="1" class="w-8 h-12 bg-white rounded-lg border border-black text-center text-xl focus:outline-none" oninput="moveToNext(this, 'input5')" onkeydown="moveToPrev(event, 'input4', 'input3')" id="input4" />
+            <input type="password" maxlength="1" class="w-8 h-12 bg-white rounded-lg border border-black text-center text-xl focus:outline-none" oninput="moveToNext(this, 'input6')" onkeydown="moveToPrev(event, 'input5', 'input4')" id="input5" />
+            <input type="password" maxlength="1" class="w-8 h-12 bg-white rounded-lg border border-black text-center text-xl focus:outline-none" oninput="moveToNext(this, 'input7')" onkeydown="moveToPrev(event, 'input6', 'input5')" id="input6" />
+            <input type="password" maxlength="1" class="w-8 h-12 bg-white rounded-lg border border-black text-center text-xl focus:outline-none" oninput="moveToNext(this, 'input8')" onkeydown="moveToPrev(event, 'input7', 'input6')" id="input7" />
+            <input type="password" maxlength="1" class="w-8 h-12 bg-white rounded-lg border border-black text-center text-xl focus:outline-none" onkeydown="moveToPrev(event, 'input8', 'input7')" id="input8" />
+        </div>
+
+        <div id="hintBox" class="w-full bg-white rounded-lg p-2 flex justify-center items-center">
+            <div class="text-[#2f1a1d] text-sm font-normal font-['Bowlby One'] tracking-wide">
+                Hint: When u be my gf?
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    /* Shaking animation with rotation */
+    @keyframes shake {
+        0% { transform: rotate(0deg); }
+        25% { transform: rotate(-10deg); }
+        50% { transform: rotate(10deg); }
+        75% { transform: rotate(-10deg); }
+        100% { transform: rotate(0deg); }
+    }
+
+    /* Apply shaking animation to the lock image */
+    .shake {
+        animation: shake 0.5s ease-in-out;
+    }
+</style>
+
+
+</html>
