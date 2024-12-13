@@ -3,3 +3,5 @@ django-staticfiles>=1.5
 djangorestframework>=3.14.0
 requests>=2.26.0
 tailwindcss>=3.0.0
+decouple>=3.5
+dj_database_url>=0.5.0
