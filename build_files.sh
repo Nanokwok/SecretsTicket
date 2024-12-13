@@ -1,9 +1,13 @@
 #!/bin/bash
+set -e  # Exit immediately if a command exits with a non-zero status
 
 echo "Starting build process..."
 
+# Upgrade pip
+python3.9 -m pip install --upgrade pip
+
 # Install dependencies
-pip install -r requirements.txt
+python3.9 -m pip install -r requirements.txt
 
 echo "Dependencies installed."
 

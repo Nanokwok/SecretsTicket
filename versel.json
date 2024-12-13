@@ -2,17 +2,17 @@
   "version": 2,
   "builds": [
     {
+      "src": "build_files.sh",
+      "use": "@vercel/shell",
+      "config": {
+        "distDir": "SecretsTicket/staticfiles"
+      }
+    },
+    {
       "src": "mysite/wsgi.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
-        "runtime": "python3.9"
-      }
-    },
-    {
-      "src": "build_files.sh",
-      "use": "@vercel/python",
-      "config": {
         "runtime": "python3.9"
       }
     }
