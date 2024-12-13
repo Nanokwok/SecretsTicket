@@ -18,7 +18,7 @@
     </div>
     <div class="w-full px-4 py-4 flex flex-col justify-center items-center gap-4">
         {% for ticket in tickets %}
-        <div class="w-full h-auto relative flex justify-center items-center">
+        <a href="{% url 'SecretsTicket:ticket_detail' ticket.pk %}" class="w-full h-auto relative flex justify-center items-center">
             <!-- Ticket Image -->
             {% if forloop.counter|divisibleby:3 %}
                 <img src="{% static 'ticket/yellow_ticket.png' %}" alt="SecretsTicket" class="w-full h-auto object-cover" />
@@ -59,7 +59,7 @@
                     <div class="text-white text-[12px] md:text-[15px] font-normal tracking-wide">{{ ticket.description }}</div>
                 </div>
             </div>
-        </div>
+        </a>
         {% endfor %}
     </div>
 </div>

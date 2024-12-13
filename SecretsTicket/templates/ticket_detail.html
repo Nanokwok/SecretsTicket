@@ -1,0 +1,94 @@
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
+    <title>{{ ticket.title }} - SecretsTicket</title>
+</head>
+
+<div class="w-full h-full pt-10 pb-16 bg-[#fbe261] flex flex-col justify-start items-center gap-4">
+    <div class="w-full px-4 h-auto flex flex-col justify-start items-center gap-4">
+        <div class="w-full text-[#2f1a1d] text-[40px] md:text-[64px] font-bold tracking-widest text-center">Secrets</div>
+        <div class="w-full text-[#ff627c] text-[80px] md:text-[64px] font-bold text-center -mt-[20px]">Ticket</div>
+    </div>
+    <div class="w-full px-4 py-8 flex flex-col justify-center items-center gap-4">
+        <!-- Ticket Image -->
+        <div class="w-full h-auto relative flex justify-center items-center">
+            <img src="{% static 'ticket/pink_ticket.png' %}" alt="SecretsTicket" class="w-full h-auto object-cover" />
+            <!-- Text Overlay -->
+            <div class="absolute top-0 w-full h-full flex justify-between items-center px-8">
+                <!-- Left part: Fixed-Width Frame for c Image with Padding -->
+                <div class="w-[120px] h-full flex justify-center items-center p-2">
+                    <img src="{% static 'ticket/c1.png' %}" alt="c1" class="h-full w-auto object-contain" />
+                </div>
+                <!-- Right part: Title and Description -->
+                <div class="flex flex-col justify-center items-start pl-4">
+                    <div class="text-white text-[20px] md:text-[32px] font-bold tracking-wide">{{ ticket.title }}</div>
+                    <div class="text-white text-[12px] md:text-[15px] font-normal tracking-wide">{{ ticket.description }}</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="w-full mt-5 px-4 py-6 bg-white rounded-lg border-[1px] border-black">
+            <div class="text-[#2f1a1d] text-[24px] font-bold mb-4 text-center">Ticket Details</div>
+            <div class="text-[#2f1a1d] text-[18px] mb-4">Title: {{ ticket.title }}</div>
+            <div class="text-[#2f1a1d] text-[18px] mb-4">Description: {{ ticket.description }}</div>
+        </div>
+        
+        <div class="mt-4 w-full flex justify-center">
+            <button onclick="showDeleteConfirmation()" class="w-full bg-[#ff4c4c] text-white font-semibold text-[16px] py-3 px-8 rounded-full hover:bg-[#f4435e] transition-all duration-300">
+                Use Ticket
+            </button>
+        </div>
+
+        
+        <div class="mt-5 w-full flex justify-center">
+            <a href="{% url 'SecretsTicket:ticket' %}" class="bg-[#ff627c] text-white font-semibold text-[16px] py-3 px-8 rounded-full hover:bg-[#f4435e] transition-all duration-300">
+                Back to Tickets
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation Overlay -->
+<div id="confirmation-overlay" class="fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex justify-center items-center hidden">
+    <div class="bg-white p-6 rounded-lg w-[80%] md:w-[400px] text-center">
+        <h2 class="text-[24px] font-bold mb-4">Are you sure you want to use this ticket?</h2>
+        <div class="flex justify-center gap-4">
+            <button onclick="deleteTicket()" class="bg-[#ff627c] text-white font-semibold py-2 px-6 rounded-full hover:bg-[#f4435e] transition-all duration-300">Yes, Use it!</button>
+            <button onclick="closeDeleteConfirmation()" class="bg-gray-300 text-[#2f1a1d] font-semibold py-2 px-6 rounded-full hover:bg-gray-400 transition-all duration-300">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showDeleteConfirmation() {
+        document.getElementById('confirmation-overlay').classList.remove('hidden');
+    }
+    
+    function closeDeleteConfirmation() {
+        document.getElementById('confirmation-overlay').classList.add('hidden');
+    }
+    
+    function deleteTicket() {
+        fetch("{% url 'SecretsTicket:ticket_delete' ticket.pk %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = "{% url 'SecretsTicket:ticket' %}";
+            } else {
+                alert("There was an error deleting the ticket.");
+            }
+        })
+        .catch(error => {
+            alert("There was an error deleting the ticket.");
+        });
+    }
+</script>
