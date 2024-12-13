@@ -5,4 +5,5 @@ app_name = "SecretsTicket"
 
 urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
+    path('ticket/', views.TicketView.as_view(), name='ticket'),
 ]

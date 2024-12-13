@@ -1,6 +1,4 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -11,18 +9,17 @@
     <title>SecretsTicket</title>
 </head>
 <script>
-    // Function to move to the next input
+    const ticketUrl = "{% url 'SecretsTicket:ticket' %}";
     function moveToNext(current, nextId) {
         if (current.value.length === 1) {
             const nextInput = document.getElementById(nextId);
             if (nextInput) {
                 nextInput.focus();
             }
-            checkPassword(); // Check password whenever the user types the next character
+            checkPassword();
         }
     }
 
-    // Function to move to the previous input on Backspace
     function moveToPrev(event, currentId, prevId) {
         if (event.key === 'Backspace' && event.target.value === '') {
             const prevInput = document.getElementById(prevId);
@@ -50,9 +47,8 @@ function checkPassword() {
     const hintBox = document.getElementById('hintBox');
     const lockImage = document.querySelector('img[alt="Lock"]');  // Get lock image
 
-    // Check if the password matches
     if (password === '09082024') {
-        hintBox.innerHTML = '<button class="w-full bg-[#ff627c] text-white py-2 px-4 rounded-lg hover:bg-[#e15a6f] focus:outline-none focus:ring-2 focus:ring-[#ff627c]">See Ticket</button>';
+        hintBox.innerHTML = `<button onclick="window.location.href='${ticketUrl}'" class="w-full bg-[#ff627c] text-white py-2 px-4 rounded-lg hover:bg-[#e15a6f] focus:outline-none focus:ring-2 focus:ring-[#ff627c]">See Ticket</button>`;
     } else {
         hintBox.innerHTML = 'hint: when u be my gf <3';
 
@@ -71,7 +67,7 @@ function checkPassword() {
     document.addEventListener('DOMContentLoaded', function() {
         const inputs = document.querySelectorAll('input[type="password"]');
         inputs.forEach(input => {
-            input.addEventListener('input', checkPassword); // Trigger password check when typing
+            input.addEventListener('input', checkPassword);
         });
     });
 </script>
@@ -85,7 +81,7 @@ function checkPassword() {
                         <div class="w-full text-[#2f1a1d] text-[10vw] md:text-[64px] font-bold tracking-[2px] md:tracking-[3.84px]">
                             SECRETS
                         </div>
-                        <div class="w-full text-[#ff627c] text-[25vw] md:text-[64px] font-bold tracking-[2px] md:tracking-[3.84px] -mt-[40px]">
+                        <div class="w-full text-[#ff627c] text-[30vw] md:text-[64px] font-bold tracking-[2px] md:tracking-[3.84px] -mt-[40px]">
                             Ticket
                         </div>
                     </div>
@@ -139,5 +135,3 @@ function checkPassword() {
     }
 </style>
 
-
-</html>

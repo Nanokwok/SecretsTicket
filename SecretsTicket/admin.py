@@ -1,3 +1,4 @@
 from django.contrib import admin
+from SecretsTicket.models import Ticket
 
-# Register your models here.
+admin.site.register(Ticket)
