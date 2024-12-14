@@ -1,27 +1,29 @@
 #!/bin/bash
 
-echo "Starting build process..."
+set -e
 
-# Check if pip is installed, and install it if it's missing
-if ! python3.9 -m pip --version &>/dev/null; then
-    echo "pip not found for Python 3.9. Installing..."
-    python3.9 -m ensurepip --upgrade
-    python3.9 -m pip install --upgrade pip
-else
-    echo "pip is already installed."
-fi
+PYTHON_CMD=$(command -v python3.9 || command -v python3.10 || command -v python3)
 
-# Install dependencies
-echo "Installing dependencies..."
-pip install -r requirements.txt
+# Upgrade pip and core tools
+echo "Upgrading pip and core tools"
+$PYTHON_CMD -m pip install --upgrade pip setuptools wheel
 
-# Run migrations
-echo "Running migrations..."
-python3.9 manage.py makemigrations
-python3.9 manage.py migrate
+# Install requirements
+echo "Installing requirements"
+$PYTHON_CMD -m pip install -r requirements.txt
+
+# Run Django management commands
+echo "Running Django management commands"
+$PYTHON_CMD manage.py makemigrations SecretsTicket
+$PYTHON_CMD manage.py migrate
 
 # Collect static files
-echo "Collecting static files..."
-python3.9 manage.py collectstatic --noinput
+echo "Collecting static files"
+$PYTHON_CMD manage.py collectstatic --noinput
 
-echo "Build process completed successfully."
+# Create build directories
+echo "Creating build directories"
+mkdir -p staticfiles_build/static
+cp -r staticfiles/* staticfiles_build/static/ || echo "No static files to copy"
+
+echo "Build complete"
